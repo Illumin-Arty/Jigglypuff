@@ -31,7 +31,8 @@ async def on_ready():
     PATH_OF_DIRSONGS = input('Input Folder: ')
 
     if PATH_OF_DIRSONGS == None :
-        PATH_OF_DIRSONGS = os.getenv('DIRSONGS')
+        # PATH_OF_DIRSONGS = os.getenv('DIRSONGS')
+        PATH_OF_DIRSONGS = f'{os.getcwd()}\\songs\\'
 
     guild = nextcord.utils.get(bot.guilds, id=YOUR_GUILD_ID)
 
@@ -49,10 +50,6 @@ async def on_ready():
             now = time.localtime(time.time())
             print(f"({now.tm_hour:02}:{now.tm_min:02}:{now.tm_sec:02})", "Piste n°" + str(self.pos),
                   "est lancée sans aucun problème !")
-
-        def next(self):
-            self.pos += 1
-            self.play()
 
         def manager(self, err=None):
             if err:
