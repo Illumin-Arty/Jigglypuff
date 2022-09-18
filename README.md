@@ -21,7 +21,7 @@ Python 3
 ### Built with
 * Python
 
-### Author
+### Authors
 * Animesh
 * Shashwat
 * Shubham
