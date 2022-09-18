@@ -15,8 +15,6 @@ intents.members = True
 intents.message_content = True
 intents.voice_states = True
 intents.emojis_and_stickers = True
-all_intents = intents.all()
-all_intents = True
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 YOUR_GUILD_ID = int(os.getenv('GUILD_ID'))
@@ -30,6 +28,37 @@ async def ping(ctx):
     await ctx.send(embed=em)
 
 
+
+@bot.command(name='connect', help=f"connect bot to your joinned voice channel")
+async def join(ctx):
+    if (ctx.author.voice): # If the person is in a channel
+        channel = ctx.author.voice.channel
+        await channel.connect()
+        await ctx.send('Bot joined')
+    else: #But is (s)he isn't in a voice channel
+        await ctx.send("You must be in a voice channel first so I can join it.")
+
+
+
+# @bot.event
+# async def on_ready():
+#     print(f'logged in as: {bot.user.name}')
+#     bot.loop.create_task(node_connect())
+#     await bot.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=",help"))
+
+# async def node_connect():
+#     await bot.wait_until_ready()
+
+# @bot.event
+# async def on_command_error(ctx: commands.Context, error):
+#     if isinstance(error, commands.MissingRequiredArgument):
+#         await ctx.send(embed=nextcord.Embed(description="missing *arguments..*", color=ctx.author.color))
+
+# @bot.event
+# async def on_command_error(ctx: commands.Context, error):
+#     if isinstance(error, commands.CommandOnCooldown):
+#         em = nextcord.Embed(description=f'**cooldown active**\ntry again in *{error.retry_after:.2f}s*',color=ctx.author.color)
+#         await ctx.send(embed=em)
 
 bot.run(YOUR_BOT_TOKEN)
 if __name__ == '__main__':
