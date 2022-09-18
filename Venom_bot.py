@@ -21,6 +21,7 @@ YOUR_GUILD_ID = int(os.getenv('GUILD_ID'))
 YOUR_CHANNEL_ID = int(os.getenv('CHANNEL_ID'))
 YOUR_BOT_TOKEN = os.getenv('BOT_TOKEN')
 
+global PATH_OF_DIRSONGS = f'{os.getcwd()}\\songs\\'
 
 @bot.command(name='ping', help=f"displays bot's latency")
 async def ping(ctx):    
@@ -30,7 +31,7 @@ async def ping(ctx):
 
 
 @bot.command(name='connect', help=f"connect bot to your joined voice channel")
-async def join(ctx):
+async def join(ctx):    
     if (ctx.author.voice): # If the person is in a channel
         channel = ctx.author.voice.channel
         await channel.connect()
@@ -44,6 +45,16 @@ async def leave(ctx): # Note: ?leave won't work, only ?~ will work unless you ch
     else: # But if it isn't
         await ctx.send("I'm not in a voice channel, use the join command to make me join")
 
+
+@bot.command(name='play')
+async def play(ctx,arg):
+    if(ctx.author.voice):
+        channel = ctx.message.author.voice.channel
+        voice = await channel.connect()
+        source = FFmpegPCMAudio("PATH_OF_DIRSONGS" + arg)
+        player = voice.play(source)
+    else:
+        join(ctx)
 
 # @bot.event
 # async def on_ready():
