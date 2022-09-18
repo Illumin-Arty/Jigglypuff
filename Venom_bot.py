@@ -77,7 +77,7 @@ async def on_ready():
             print("Error!")
 
     await main()
-    print("Le bot est lancé la musique va démarer !")
+    print("The bot is launched the music will start!")
 
 
 
