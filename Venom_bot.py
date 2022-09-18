@@ -31,8 +31,10 @@ async def on_ready():
     PATH_OF_DIRSONGS = input('Input Folder: ')
 
     if PATH_OF_DIRSONGS == None :
-        # PATH_OF_DIRSONGS = os.getenv('DIRSONGS')
-        PATH_OF_DIRSONGS = f'{os.getcwd()}\\songs\\'
+        PATH_OF_DIRSONGS = os.getenv('DIRSONGS')
+        # PATH_OF_DIRSONGS = f'{os.getcwd()}\\songs\\'
+    # print(PATH_OF_DIRSONGS)
+    # return
 
     guild = nextcord.utils.get(bot.guilds, id=YOUR_GUILD_ID)
 
@@ -65,9 +67,16 @@ async def on_ready():
             vc: nextcord.VoiceClient = await voice_channel.connect()
 
             song_list = []
-
+            counter = 0
             for file in pathlib.Path(PATH_OF_DIRSONGS).iterdir():
+                print(file)
                 song_list.append(file)
+                print(song_list)
+                counter += 1 
+                if counter == 2 :
+                    break
+
+
 
             _Queue = Queue(song_list, vc)
 
