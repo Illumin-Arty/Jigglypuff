@@ -21,7 +21,7 @@ YOUR_GUILD_ID = int(os.getenv('GUILD_ID'))
 YOUR_CHANNEL_ID = int(os.getenv('CHANNEL_ID'))
 YOUR_BOT_TOKEN = os.getenv('BOT_TOKEN')
 
-global PATH_OF_DIRSONGS = f'{os.getcwd()}\\songs\\'
+PATH_OF_DIRSONGS = os.getenv('DIRSONGS')
 
 @bot.command(name='ping', help=f"displays bot's latency")
 async def ping(ctx):    
