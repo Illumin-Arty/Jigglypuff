@@ -48,8 +48,8 @@ async def on_ready():
         def play(self):
             self.voice.play(nextcord.FFmpegPCMAudio(source=self[self.pos]), after=self.manager)
             now = time.localtime(time.time())
-            print(f"({now.tm_hour:02}:{now.tm_min:02}:{now.tm_sec:02})", "Piste n°" + str(self.pos),
-                  "est lancée sans aucun problème !")
+            print(f"({now.tm_hour:02}:{now.tm_min:02}:{now.tm_sec:02})", "Track no." + str(self.pos),
+                  "is launched without any problem!")
 
         def manager(self, err=None):
             if err:
