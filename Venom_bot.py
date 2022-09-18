@@ -29,7 +29,7 @@ async def ping(ctx):
 
 
 
-@bot.command(name='connect', help=f"connect bot to your joinned voice channel")
+@bot.command(name='connect', help=f"connect bot to your joined voice channel")
 async def join(ctx):
     if (ctx.author.voice): # If the person is in a channel
         channel = ctx.author.voice.channel
@@ -38,6 +38,13 @@ async def join(ctx):
     else: #But is (s)he isn't in a voice channel
         await ctx.send("You must be in a voice channel first so I can join it.")
 
+@bot.command(name='disconnect', help=f"Disconnect bot to your joined voice channel")
+async def leave(ctx): # Note: ?leave won't work, only ?~ will work unless you change  `name = ["~"]` to `aliases = ["~"]` so both can work.
+    if (ctx.voice_client): # If the bot is in a voice channel 
+        await ctx.guild.voice_client.disconnect() # Leave the channel
+        await ctx.send('Bot left')
+    else: # But if it isn't
+        await ctx.send("I'm not in a voice channel, use the join command to make me join")
 
 
 # @bot.event
