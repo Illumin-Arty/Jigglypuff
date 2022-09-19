@@ -28,9 +28,6 @@ async def ping(ctx):
     em = nextcord.Embed(title="pong!", description=f'{round(bot.latency*1000)}ms', color=ctx.author.color)
     await ctx.send(embed=em)
 
-
-
-@bot.command(name='connect', help=f"connect bot to your joined voice channel")
 async def join(ctx):    
     if (ctx.author.voice): # If the person is in a channel
         channel = ctx.author.voice.channel
@@ -47,15 +44,20 @@ async def leave(ctx): # Note: ?leave won't work, only ?~ will work unless you ch
 
 
 @bot.command(name='play')
-async def play(ctx,arg):
+async def play(ctx):
     if(ctx.author.voice):
         channel = ctx.message.author.voice.channel
         voice = await channel.connect()
-        source = FFmpegPCMAudio("PATH_OF_DIRSONGS" + arg)
-        player = voice.play(source)
+        source = FFmpegPCMAudio("PATH_OF_DIRSONGS")
+        voice.play(source)
     else:
         join(ctx)
 
+@bot.command(name='stop')
+async def stop(ctx):
+    voice = nextcord.utils.get(bot.voice_clients,guild=ctx.guild)
+    voice.stop()
+    await ctx.guild.voice_client.disconnect()
 # @bot.event
 # async def on_ready():
 #     print(f'logged in as: {bot.user.name}')
@@ -65,16 +67,16 @@ async def play(ctx,arg):
 # async def node_connect():
 #     await bot.wait_until_ready()
 
-# @bot.event
-# async def on_command_error(ctx: commands.Context, error):
-#     if isinstance(error, commands.MissingRequiredArgument):
-#         await ctx.send(embed=nextcord.Embed(description="missing *arguments..*", color=ctx.author.color))
+@bot.event
+async def on_command_error(ctx: commands.Context, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send(embed=nextcord.Embed(description="missing *arguments..*", color=ctx.author.color))
 
-# @bot.event
-# async def on_command_error(ctx: commands.Context, error):
-#     if isinstance(error, commands.CommandOnCooldown):
-#         em = nextcord.Embed(description=f'**cooldown active**\ntry again in *{error.retry_after:.2f}s*',color=ctx.author.color)
-#         await ctx.send(embed=em)
+@bot.event
+async def on_command_error(ctx: commands.Context, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = nextcord.Embed(description=f'**cooldown active**\ntry again in *{error.retry_after:.2f}s*',color=ctx.author.color)
+        await ctx.send(embed=em)
 
 bot.run(YOUR_BOT_TOKEN)
 if __name__ == '__main__':
